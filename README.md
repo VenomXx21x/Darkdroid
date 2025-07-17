@@ -60,26 +60,27 @@ A Professional Android ADB Exploitation Framework for Ethical Security Research
 
 ## Example Run:
 
-_ \ _____ _______|  | __\______ \_______  ____ |__| __| _/
- |    |  \\__  \\_  __ \  |/ / |    |  \_  __ \/  _ \|  |/ __ | 
- |    `   \/ __ \|  | \/    <  |    `   \  | \(  <_> )  / /_/ | 
-/_______  (____  /__|  |__|_ \/_______  /__|   \____/|__\____ | 
-        \/     \/           \/        \/                     \/ 
-        
-Android ADB Exploitation Framework
-Version 3.0 | Date: 2025-07-17
+```plaintext
+██████╗  █████╗ ██████╗ ██╗  ██╗██████╗ ██████╗ ███████╗██╗  ██╗
+██╔══██╗██╔══██╗██╔══██╗██║ ██╔╝██╔══██╗██╔══██╗██╔════╝██║  ██║
+██████╔╝███████║██████╔╝█████╔╝ ██████╔╝██████╔╝█████╗  ███████║
+██╔═══╝ ██╔══██║██╔═══╝ ██╔═██╗ ██╔═══╝ ██╔═══╝ ██╔══╝  ██╔══██║
+██║     ██║  ██║██║     ██║  ██╗██║     ██║     ███████╗██║  ██║
+╚═╝     ╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝╚═╝     ╚═╝     ╚══════╝╚═╝  ╚═╝
+Created by HacktifyDiaries
 
-Available Commands:
-------------------------------------------------------------
-[1] List Connected Devices        [8] Pull File/Folder
-[2] Connect to Device             [9] Push File
-[3] Get Shell                     [10] Install APK
-[4] Generate Payload              [11] Check Requirements
-[5] Bind Payload to APK           [12] Reboot Device
-[6] Start Listener                [13] Capture Screenshot
-[7] Stop Listener                 [14] Get Device Info
-[0] Exit DarkDroid
-------------------------------------------------------------
+Select a platform to simulate brute force attack:
+1. Facebook
+2. Instagram
+3. LinkedIn
+4. Telegram
+Enter your choice (1-4): 1
+Enter the target username: john_doe
+Enter the path to your password list file: passwords.txt
+[+] Starting brute force on Facebook for user: john_doe
+[-] Trying password: password123
+[-] Trying password: 123456
+[+] Correct password found: securepassword123
 
 ```
 
