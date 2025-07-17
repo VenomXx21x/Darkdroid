@@ -9,6 +9,7 @@ This tool is strictly for educational purposes, penetration testing, and authori
 <img width="1726" height="824" alt="2025-07-18_03-05" src="https://github.com/user-attachments/assets/64cd3d84-711c-4e61-a262-345d9b9ae344" />
 
 
+
 ⚙️ How It Works
 DarkDroid leverages ADB and Metasploit to simulate post-exploitation scenarios:
 
