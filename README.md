@@ -2,18 +2,9 @@ DarkDroid 🔓
 A Professional Android ADB Exploitation Framework for Ethical Security Research
 🔍 Description
 DarkDroid is an advanced Android ADB Exploitation Framework designed for ethical hackers, penetration testers, and security researchers. It simulates real-world attack vectors via ADB (Android Debug Bridge) to demonstrate vulnerabilities, educate on defense strategies, and test device security in authorized environments.
+
 ⚠️ Ethical Note:
 This tool is strictly for educational purposes, penetration testing, and authorized security assessments. Unauthorized use is illegal.
-
-🚀 Features
-✔ ADB Automation – Execute complex ADB commands via a user-friendly CLI.
-✔ Payload Generator – Create Metasploit-compatible Android payloads (reverse/bind TCP).
-✔ APK Binder – Inject payloads into legitimate APKs (for penetration testing).
-✔ Listener Control – Start/stop Metasploit handlers directly from the tool.
-✔ Device Interaction – Pull/push files, install APKs, reboot devices, and more.
-✔ Forensics Mode – Capture screenshots, dump device info, and analyze system data.
-✔ Sleek Terminal UI – Dark-themed, color-coded, and intuitive.
-
 
 <img width="1726" height="824" alt="2025-07-18_03-05" src="https://github.com/user-attachments/assets/64cd3d84-711c-4e61-a262-345d9b9ae344" />
 
