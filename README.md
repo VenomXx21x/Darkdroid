@@ -24,22 +24,15 @@ Interact with the compromised device (ethical use only).
 📥 Installation
 Prerequisites
 ADB (Android Debug Bridge)
-
 Metasploit Framework
-
 Python 3.x
-
 Java JDK (for APK signing)
-
 
 git clone https://github.com/yourusername/DarkDroid.git
 cd DarkDroid
 pip install -r requirements.txt
 chmod +x darkdroid.py
 
-💻 Usage
-bash
-python3 darkdroid.py
 
 📜 Ethical Use Case
 ✅ Authorized Penetration Testing
