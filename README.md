@@ -34,7 +34,8 @@ A Professional Android ADB Exploitation Framework for Ethical Security Research
 ### Prerequisites:
 -ADB (Android Debug Bridge)
 - Python 3.x
-- 
+- Java JDK (for APK signing)
+  
 ### Steps:
 1. Clone the repository:
    ```bash
