@@ -28,11 +28,6 @@ Metasploit Framework
 Python 3.x
 Java JDK (for APK signing)
 
-git clone https://github.com/yourusername/DarkDroid.git
-cd DarkDroid
-pip install -r requirements.txt
-chmod +x darkdroid.py
-
 
 📜 Ethical Use Case
 ✅ Authorized Penetration Testing
