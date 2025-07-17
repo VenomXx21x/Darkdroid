@@ -6,6 +6,8 @@ DarkDroid is an advanced Android ADB Exploitation Framework designed for ethical
 This tool is strictly for educational purposes, penetration testing, and authorized security assessments. Unauthorized use is illegal.
 
 ![Image](https://github.com/user-attachments/assets/2427efd0-049d-4c4e-bd20-c80035a11243)
+<img width="1726" height="824" alt="2025-07-18_03-05" src="https://github.com/user-attachments/assets/64cd3d84-711c-4e61-a262-345d9b9ae344" />
+![Uploading 2025-07-18 03-25-41.gif…]()
 
 🚀 Features
 ✔ ADB Automation – Execute complex ADB commands via a user-friendly CLI.
