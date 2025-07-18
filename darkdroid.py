@@ -5,7 +5,6 @@ import time
 import subprocess
 from threading import Thread
 from colorama import init, Fore, Style
-from textwrap import fill
 
 # Initialize colorama
 init(autoreset=True)
@@ -15,6 +14,7 @@ class DarkDroid:
         self.current_device = None
         self.listener_thread = None
         self.listener_active = False
+        self._last_menu_display = 0
         self.commands = [
             ('1', 'List Connected Devices', self.list_devices),
             ('2', 'Connect to Device', self.connect_device),
@@ -45,31 +45,32 @@ class DarkDroid:
         """
         print(Fore.RED + banner_art)
         print(Fore.LIGHTWHITE_EX + Style.BRIGHT + "Android ADB Exploitation Framework")
-        print(Fore.LIGHTBLACK_EX + f"Version 3.0 | Date: {time.strftime('%Y-%m-%d')}\n")
+        print(Fore.LIGHTBLACK_EX + f"Version 3.1 | Author: CyberWarLab |Date: {time.strftime('%Y-%m-%d')}\n")
 
-    def show_menu(self):
-        print(Fore.LIGHTWHITE_EX + "Available Commands:")
-        print("-"*60)
-        
-        # Split commands into two columns (7 left, 7 right)
-        left_commands = self.commands[:7]
-        right_commands = self.commands[7:]
-        
-        # Print two columns side by side
-        for (left, right) in zip(left_commands, right_commands):
-            left_num, left_desc, _ = left
-            right_num, right_desc, _ = right
-            print(f"{Fore.LIGHTCYAN_EX}[{left_num}] {Fore.LIGHTWHITE_EX}{left_desc.ljust(30)}", end="")
-            print(f"{Fore.LIGHTCYAN_EX}[{right_num}] {Fore.LIGHTWHITE_EX}{right_desc}")
-        
-        # Handle odd number of commands
-        if len(self.commands) % 2 != 0:
-            last_num, last_desc, _ = self.commands[-1]
-            print(f"{Fore.LIGHTCYAN_EX}[{last_num}] {Fore.LIGHTWHITE_EX}{last_desc}")
-        
-        print("-"*60)
-        print(Fore.LIGHTYELLOW_EX + f"[+] Listener Status: {'ACTIVE' if self.listener_active else 'INACTIVE'}")
-        print(Fore.LIGHTGREEN_EX + f"[+] Connected Device: {self.current_device or 'None'}\n")
+    def show_menu(self, force=False):
+        """Display menu only when forced or after long inactivity"""
+        if force or (time.time() - self._last_menu_display > 60):
+            print(Fore.LIGHTWHITE_EX + "Available Commands:")
+            print("-"*60)
+            
+            # Two-column display
+            left_commands = self.commands[:7]
+            right_commands = self.commands[7:]
+            
+            for (left, right) in zip(left_commands, right_commands):
+                left_num, left_desc, _ = left
+                right_num, right_desc, _ = right
+                print(f"{Fore.LIGHTCYAN_EX}[{left_num}] {Fore.LIGHTWHITE_EX}{left_desc.ljust(25)}", end="")
+                print(f"{Fore.LIGHTCYAN_EX}[{right_num}] {Fore.LIGHTWHITE_EX}{right_desc}")
+            
+            print("-"*60)
+            print(Fore.LIGHTYELLOW_EX + f"[+] Listener Status: {'ACTIVE' if self.listener_active else 'INACTIVE'}")
+            print(Fore.LIGHTGREEN_EX + f"[+] Connected Device: {self.current_device or 'None'}\n")
+            self._last_menu_display = time.time()
+
+    def clear_screen(self):
+        """Clear terminal screen"""
+        os.system('clear' if os.name == 'posix' else 'cls')
 
     def verify_device_connection(self):
         if not self.current_device:
@@ -120,7 +121,7 @@ class DarkDroid:
         self.listener_thread.start()
         
         print(Fore.GREEN + f"\n[+] Listener started on {lhost}:{lport}")
-        print(Fore.LIGHTBLACK_EX + "[*] Use 'Stop Listener' (7) to terminate\n")
+        print(Fore.LIGHTBLACK_EX + "[*] Use 'Stop Listener' (7) to terminate")
 
     def stop_listener(self):
         if not self.listener_active:
@@ -145,7 +146,6 @@ class DarkDroid:
         if not device:
             return
         
-        # If it's an IP address, try to connect first
         if '.' in device:
             print(Fore.LIGHTYELLOW_EX + "\n[*] Attempting to connect to device...")
             result = subprocess.run(['adb', 'connect', device], capture_output=True, text=True)
@@ -154,25 +154,26 @@ class DarkDroid:
                 print(Fore.RED + result.stderr)
                 return
         
-        # Verify the device exists
         result = subprocess.run(['adb', 'devices'], capture_output=True, text=True)
         if device not in result.stdout:
             print(Fore.RED + f"[-] Device {device} not found!")
             return
         
         self.current_device = device
-        print(Fore.GREEN + f"\n[+] Connected to: {device}\n")
+        print(Fore.GREEN + f"\n[+] Connected to: {device}")
 
     def get_shell(self):
         if not self.verify_device_connection():
             print(Fore.RED + "\n[-] No device connected or device not responding!")
-            print(Fore.YELLOW + "[*] Use 'List Devices' (1) and 'Connect to Device' (2) first\n")
+            print(Fore.YELLOW + "[*] Use 'List Devices' (1) and 'Connect to Device' (2) first")
             return
         
         print(Fore.LIGHTYELLOW_EX + f"\n[*] Launching shell on {self.current_device}...")
+        print(Fore.LIGHTBLACK_EX + "[*] Type 'exit' to return to DarkDroid")
         print("-"*60)
         os.system(f'adb -s {self.current_device} shell')
-        print("-"*60 + "\n")
+        print("-"*60)
+        print(Fore.LIGHTBLUE_EX + "\n[*] Returned to DarkDroid")
 
     def generate_payload(self):
         print(Fore.LIGHTBLUE_EX + "\n[=] Payload Generator")
@@ -258,7 +259,7 @@ class DarkDroid:
             else:
                 print(Fore.RED + f"[✗] {tool.ljust(15)} Missing")
         
-        print("-"*40 + "\n")
+        print("-"*40)
 
     def reboot_device(self):
         if not self.verify_device_connection():
@@ -281,11 +282,8 @@ class DarkDroid:
         filename = f"screenshot_{time.strftime('%Y%m%d_%H%M%S')}.png"
         print(Fore.LIGHTYELLOW_EX + "\n[*] Capturing screenshot...")
         
-        # Capture to device
         os.system(f"adb -s {self.current_device} shell screencap -p /sdcard/{filename}")
-        # Pull to local
         os.system(f"adb -s {self.current_device} pull /sdcard/{filename}")
-        # Remove from device
         os.system(f"adb -s {self.current_device} shell rm /sdcard/{filename}")
         
         print(Fore.GREEN + f"\n[+] Screenshot saved as {filename}")
@@ -298,36 +296,39 @@ class DarkDroid:
         print(Fore.LIGHTBLUE_EX + "\n[=] Device Information:")
         print("-"*60)
         os.system(f"adb -s {self.current_device} shell getprop")
-        print("-"*60 + "\n")
+        print("-"*60)
 
     def exit_tool(self):
         if self.listener_active:
             self.stop_listener()
         print(Fore.LIGHTYELLOW_EX + "\n[+] Exiting DarkDroid...")
-        print(Fore.LIGHTBLACK_EX + "[*] Remember: With great power comes great responsibility.\n")
+        print(Fore.LIGHTBLACK_EX + "[*] Remember: With great power comes great responsibility.")
         sys.exit(0)
 
     def run(self):
         self.print_banner()
         while True:
             try:
-                self.show_menu()
+                self.show_menu(force=True)
                 choice = input(Fore.LIGHTWHITE_EX + "darkdroid> ").strip()
                 
-                # Find the command
                 cmd = next((c for c in self.commands if c[0] == choice), None)
                 if cmd:
-                    cmd[2]()  # Execute the command function
+                    self.clear_screen()
+                    cmd[2]()  # Execute command
+                    
+                    # Don't prompt for these commands
+                    if choice not in ['0', '3']:
+                        input(Fore.LIGHTBLACK_EX + "\n[*] Press Enter to continue...")
                 else:
                     print(Fore.RED + "[-] Invalid option. Please try again.")
-                
-                # Small pause to let user read output
-                if choice != '0':
-                    input(Fore.LIGHTBLACK_EX + "\n[*] Press Enter to continue...")
+                    
             except KeyboardInterrupt:
                 print(Fore.LIGHTRED_EX + "\n[!] Use option '0' to exit properly.")
+                input(Fore.LIGHTBLACK_EX + "[*] Press Enter to continue...")
             except Exception as e:
-                print(Fore.RED + f"[-] Unexpected error: {str(e)}")
+                print(Fore.RED + f"[-] Error: {str(e)}")
+                input(Fore.LIGHTBLACK_EX + "\n[*] Press Enter to continue...")
 
 if __name__ == '__main__':
     try:
